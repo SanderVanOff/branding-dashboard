@@ -1,4 +1,3 @@
-import { getDatabase } from "firebase/database";
 import { database } from "@/plugins/axios";
 
 export default {
