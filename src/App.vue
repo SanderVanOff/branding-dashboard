@@ -1,32 +1,55 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <v-app>
+    <component :is="`${layout}-layout`"></component>
+    <div v-if="notify.length" class="alerts">
+      <v-alert v-for="n of notify" :key="n.id" :type="n.type">
+        {{ getNotifyMessage(n.message) }}
+      </v-alert>
     </div>
-    <router-view/>
-  </div>
+  </v-app>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script>
+import notifyMessages from "@/utils/notifyMessages";
+import MainLayout from "@/layouts/MainLayout.vue";
+import EmptyLayout from "@/layouts/EmptyLayout.vue";
+
+export default {
+  name: "App",
+  components: {
+    MainLayout,
+    EmptyLayout,
+  },
+  computed: {
+    layout() {
+      return this.$route.meta.layout || "empty";
+    },
+    notify() {
+      return this.$store.getters.notify;
+    },
+  },
+  methods: {
+    getNotifyMessage(code) {
+      return notifyMessages[code];
+    },
+  },
+};
+</script>
+
+<style>
+body {
+  background: #1e1e1e;
 }
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.text-white {
+  color: #fff;
+}
+.card-dynamics,
+.card-statistic {
+  padding: 2rem;
+}
+.alerts {
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 </style>

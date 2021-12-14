@@ -1,15 +1,17 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-Vue.use(Vuex)
+//modules
+import brands from "./brands";
+import general from "./general";
+import auth from "./auth";
+import user from "./user";
+import notify from "./notify";
 
-export default new Vuex.Store({
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
-})
+Vue.use(Vuex);
+
+const store = new Vuex.Store({
+  modules: [brands, general, auth, user, notify]
+});
+
+export default store;
