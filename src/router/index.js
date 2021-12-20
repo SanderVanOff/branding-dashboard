@@ -107,6 +107,17 @@ const router = new Router({
         auth: true,
         role: "user"
       }
+    },
+    {
+      path: "*",
+      name: "404",
+      component: () =>
+        import(/* webpackChunkName: "about" */ "../views/404.vue"),
+      meta: {
+        layout: "empty",
+        auth: false,
+        role: "user"
+      }
     }
   ]
 });
